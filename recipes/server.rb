@@ -20,7 +20,7 @@
 include_recipe "postgresql::client"
 
 # randomly generate postgres password, unless using solo - see README
-if Chef::Config[:solo]
+if Chef::Config[:solo] or false # if it's :zero, we're fine :)
   missing_attrs = %w{
     postgres
   }.select do |attr|

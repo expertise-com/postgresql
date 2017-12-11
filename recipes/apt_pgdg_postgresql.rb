@@ -15,12 +15,10 @@ remote_file "#{Chef::Config[:file_cache_path]}/ACCC4CF8.asc" do
   notifies :run, 'bash[apt-key-add]', :immediately
 end
 
-apt_update 'update'
-
 package 'apt-transport-https'
 
 bash 'apt-key-add' do
-  code "sudo apt-key add #{Chef::Config[:file_cache_path]}/ACCC4CF8.asc"
+  code "sudo apt-key add #{Chef::Config[:file_cache_path]}/ACCC4CF8.asc && sudo apt-get update"
   action :nothing
 end
 

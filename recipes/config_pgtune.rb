@@ -242,7 +242,9 @@ checkpoint_segments =
   "desktop" => 3
 }.fetch(db_type)
 
-node.default['postgresql']['config']['checkpoint_segments'] = checkpoint_segments
+if node['postgresql']['version'].to_f < 9.5
+  node.default['postgresql']['config']['checkpoint_segments'] = checkpoint_segments
+end
 
 # (7) checkpoint_completion_target
 #     Time spent flushing dirty buffers during checkpoint, as fraction
@@ -255,7 +257,9 @@ checkpoint_completion_target =
   "desktop" => "0.5"
 }.fetch(db_type)
 
-node.default['postgresql']['config']['checkpoint_completion_target'] = checkpoint_completion_target
+if node['postgresql']['version'].to_f < 9.5
+  node.default['postgresql']['config']['checkpoint_completion_target'] = checkpoint_completion_target
+end
 
 # (8) wal_buffers
 #     Sets the number of disk-page buffers in shared memory for WAL.
